@@ -89,10 +89,12 @@ Settings → General → Check for updates compares against the latest GitHub Re
 
 Questions, feature requests or just wanting a different model — reach out.
 
-| Group chat | Add me |
+**Developers from anywhere are welcome to join the developer group**: talk about model access, endpoint and parameter setup, prompt craft, or bring bugs and feature requests so the app keeps getting better.
+
+| Developer group | Add me |
 | --- | --- |
-| ![Yanban group 703034136](docs/qq-group.png) | ![QQ 2080676062](docs/qq-contact.png) |
-| QQ group: 703034136 | QQ: 2080676062 |
+| ![Developer group 1136938723](docs/qq-group.jpg) | ![QQ 2080676062](docs/qq-contact.png) |
+| QQ group: 1136938723 | QQ: 2080676062 |
 
 If you would rather not deal with API keys, endpoints and model configuration at all, ask me directly: I offer a model access service with the key and endpoint set up, so you just install and use it. Billed either per token or by monthly subscription — talk to me for pricing.
 
