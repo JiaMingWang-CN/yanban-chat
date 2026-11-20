@@ -10,6 +10,11 @@ export const CURRENT_VERSION = __APP_VERSION__
 /** 原生安装插件；只在 Android 上可用 */
 interface AppUpdaterPlugin {
   downloadAndInstall(options: { url: string }): Promise<void>
+  /** 下载进度，percent 为 0–100 的整数 */
+  addListener(
+    eventName: 'progress',
+    listener: (data: { percent: number }) => void
+  ): Promise<{ remove(): Promise<void> }>
 }
 
 const AppUpdater = registerPlugin<AppUpdaterPlugin>('AppUpdater')
@@ -95,15 +100,26 @@ export const checkForUpdate = async (signal?: AbortSignal): Promise<UpdateInfo |
 }
 
 /**
- * 下载并唤起系统安装器。
+ * 下载并唤起系统安装器；下载过程中通过 onProgress 回报百分比。
  * 用户尚未允许「安装未知应用」时抛出的错误 code 为 UNKNOWN_SOURCES，
  * 原生侧已把设置页打开，界面只需提示用户回来重试。
  */
-export const installUpdate = async (info: UpdateInfo): Promise<void> => {
+export const installUpdate = async (
+  info: UpdateInfo,
+  onProgress?: (percent: number) => void
+): Promise<void> => {
   if (!canInstallInApp()) {
     throw new ApiError('protocol', 'web')
   }
-  await AppUpdater.downloadAndInstall({ url: info.url })
+  // 先挂监听再开始下载，否则第一个进度可能已经错过
+  const listener = onProgress
+    ? await AppUpdater.addListener('progress', ({ percent }) => onProgress(percent))
+    : null
+  try {
+    await AppUpdater.downloadAndInstall({ url: info.url })
+  } finally {
+    await listener?.remove()
+  }
 }
 
 /** 判断是否是「需要先允许安装未知应用」的失败 */

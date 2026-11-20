@@ -20,6 +20,8 @@ export const UpdateSetting = () => {
   const native = canInstallInApp()
   const [phase, setPhase] = useState<Phase>('idle')
   const [update, setUpdate] = useState<UpdateInfo | null>(null)
+  // 下载百分比；原生拿不到总长度时一直停在 0，界面按不确定态显示文字
+  const [percent, setPercent] = useState(0)
 
   const status = (() => {
     if (!native) {
@@ -55,9 +57,12 @@ export const UpdateSetting = () => {
     if (!update) {
       return
     }
+    setPercent(0)
     setPhase('installing')
     try {
-      await installUpdate(update)
+      await installUpdate(update, setPercent)
+      // 安装界面已经弹出，回到「更新」态，用户取消安装后可以直接重试
+      setPhase('available')
     } catch (error) {
       setPhase('available')
       showToast(
@@ -78,19 +83,35 @@ export const UpdateSetting = () => {
         <div className={styles.label}>{t('settingsUpdate')}</div>
         <div className={styles.description}>{status}</div>
       </div>
-      <Button
-        variant="outlined"
-        size="m"
-        className={styles.cellButton}
-        disabled={!native || busy}
-        onClick={() => void (phase === 'available' ? install() : check())}
-      >
-        {phase === 'available'
-          ? t('settingsUpdateAction')
-          : phase === 'installing' || phase === 'checking'
-            ? t('settingsUpdateWorking')
-            : t('settingsUpdateCheck')}
-      </Button>
+      {phase === 'installing' ? (
+        <div
+          className={styles.updateProgress}
+          role="progressbar"
+          aria-label={t('settingsUpdateInstalling')}
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-valuenow={percent}
+        >
+          <div className={styles.updateProgressFill} style={{ width: `${percent}%` }} />
+          <span className={styles.updateProgressText}>
+            {percent > 0 ? `${percent}%` : t('settingsUpdateWorking')}
+          </span>
+        </div>
+      ) : (
+        <Button
+          variant="outlined"
+          size="m"
+          className={styles.cellButton}
+          disabled={!native || busy}
+          onClick={() => void (phase === 'available' ? install() : check())}
+        >
+          {phase === 'available'
+            ? t('settingsUpdateAction')
+            : phase === 'checking'
+              ? t('settingsUpdateWorking')
+              : t('settingsUpdateCheck')}
+        </Button>
+      )}
     </div>
   )
 }

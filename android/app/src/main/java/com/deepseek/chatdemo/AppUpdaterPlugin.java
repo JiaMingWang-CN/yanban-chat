@@ -61,7 +61,7 @@ public class AppUpdaterPlugin extends Plugin {
         }, "app-updater").start();
     }
 
-    /** 下载到缓存目录；同名文件直接覆盖，避免多次更新堆积。 */
+    /** 下载到缓存目录；同名文件直接覆盖，避免多次更新堆积。下载中按百分比通知界面。 */
     private File download(Context context, String url) throws IOException {
         HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
         connection.setConnectTimeout(CONNECT_TIMEOUT_MS);
@@ -73,22 +73,45 @@ public class AppUpdaterPlugin extends Plugin {
             if (status < 200 || status >= 300) {
                 throw new IOException("下载失败：HTTP " + status);
             }
+            // 资产会重定向到 CDN，长度以最终响应为准；拿不到长度时界面保持不确定态
+            long total = connection.getContentLengthLong();
             File target = new File(context.getCacheDir(), APK_NAME);
+            long downloaded = 0;
+            int lastPercent = -1;
             try (InputStream input = connection.getInputStream();
                  OutputStream output = new FileOutputStream(target)) {
                 byte[] buffer = new byte[16 * 1024];
                 int read;
                 while ((read = input.read(buffer)) >= 0) {
                     output.write(buffer, 0, read);
+                    downloaded += read;
+                    if (total > 0) {
+                        int percent = (int) Math.min(100, downloaded * 100 / total);
+                        if (percent != lastPercent) {
+                            lastPercent = percent;
+                            emitProgress(percent);
+                        }
+                    }
                 }
             }
             if (target.length() == 0) {
                 throw new IOException("下载的安装包为空");
             }
+            if (lastPercent >= 0) {
+                emitProgress(100);
+            }
             return target;
         } finally {
             connection.disconnect();
         }
+    }
+
+    /** 把下载进度推给网页端，界面据此把按钮换成百分比进度条 */
+    private void emitProgress(int percent) {
+        JSObject data = new JSObject();
+        data.put("percent", percent);
+        // 下载在后台线程，事件回调切回主线程，避免直接碰 WebView
+        getBridge().executeOnMainThread(() -> notifyListeners("progress", data));
     }
 
     /** 通过 FileProvider 暴露缓存文件，交给系统安装器。 */
