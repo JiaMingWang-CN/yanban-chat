@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 import type { LinkedMessage, TranslationMessage } from '../i18n/index.js'
-import { uploadFile } from './api/client.js'
+import { IS_THIRD_PARTY_CHAT, uploadFile } from './api/client.js'
 import { classifyApiError, getUploadErrorInfo, isRetryableApiError } from './api/errors.js'
 import type { FilePurpose } from './api/types.js'
 import { ACCEPT_FILE_EXTS } from './uploadExts.js'
@@ -149,6 +149,10 @@ export type UploadTask =
   | { status: 'uploading' }
   | { status: 'done'; serverId: string }
   | { status: 'error'; error: TranslationMessage; retryable: boolean }
+
+/** 输入框附件卡片的状态：三方模式下附件不经过 Files API 上传，没有任务就是已就绪；其余情况没有任务说明上传尚未开始 */
+export const attachmentStatus = (task: UploadTask | undefined): UploadTask['status'] =>
+  task?.status ?? (IS_THIRD_PARTY_CHAT ? 'done' : 'uploading')
 
 type UploadState = { tasks: Record<string, UploadTask> }
 
