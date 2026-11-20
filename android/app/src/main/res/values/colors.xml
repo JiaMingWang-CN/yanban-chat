@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 窗口与启动画面的底色：浅色主题下与页面基础背景一致 -->
+    <color name="window_background">#FFFFFF</color>
+</resources>
