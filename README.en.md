@@ -10,6 +10,8 @@ The chat model can run against either the official DeepSeek API or any Anthropic
 
 **Developers from anywhere are welcome to join the developer group**: talk about model access, endpoint and parameter setup, prompt craft, or bring bugs and feature requests so the app keeps getting better. If you just want to chat quietly and follow releases, the Yanban group is the place.
 
+**Relay services and model providers are welcome as well**: whether you want your Anthropic-compatible endpoint wired into Yanban, want to offer users a base URL they can paste into Settings, or just want to hear which models people are after — come and talk.
+
 | Yanban group | Developer group | Add me |
 | --- | --- | --- |
 | ![Yanban group 703034136](docs/qq-yanban-group.png) | ![Developer group 1136938723](docs/qq-dev-group.jpg) | ![QQ 2080676062](docs/qq-contact.png) |
