@@ -110,6 +110,16 @@ export const en = {
   settingsUpdateCheck: 'Check',
   settingsUpdateAction: 'Update',
   settingsUpdateWorking: 'Working…',
+  settingsErrorReport: 'Error reports',
+  settingsErrorReportDescription:
+    'Error information only, used to improve the app. No messages, attachments or keys.',
+  settingsSwitchOn: 'On',
+  settingsSwitchOff: 'Off',
+  errorReportPromptTitle: 'Turn on error reports?',
+  errorReportPromptBody:
+    'When something goes wrong, would you like to send us the error so we can fix it?\n\nOnly the error message and stack, app version, platform and interface language are collected, solely to improve the app. Messages, attachments, API keys and any personally identifying information are never collected.\n\nYou can turn this off at any time in Settings → General.',
+  errorReportPromptEnable: 'Turn on',
+  errorReportPromptDisable: 'Not now',
   settingDialogAsideDataOptionLabel: 'Data',
   avatarMenuSettingsDialogThemeItemLabel: 'Theme',
   avatarMenuSettingsDialogThemeSelectLightOption: 'Light',

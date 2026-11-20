@@ -418,6 +418,16 @@
   color: var(--dsw-alias-label-primary);
 }
 
+.errorReportPrompt {
+  max-width: 520px;
+}
+
+.errorReportPromptText {
+  color: var(--dsw-alias-label-primary);
+  white-space: pre-line;
+  line-height: 1.6;
+}
+
 .deleteConfirm {
   max-height: calc(100dvh - 32px);
   overflow-y: auto;

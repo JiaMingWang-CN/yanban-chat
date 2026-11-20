@@ -16,6 +16,7 @@ import { MobileHeader } from '../components/session/MobileHeader.js'
 import { Welcome } from '../components/session/Welcome.js'
 import { ensureApiKey } from '../components/settings/settingsDialogState.js'
 import { SettingsDialog } from '../components/settings/SettingsDialog.js'
+import { ErrorReportPrompt } from '../components/settings/ErrorReportPrompt.js'
 import { Toast } from '../components/base/Toast.js'
 import { showToast } from '../components/base/toastState.js'
 import { onUploadNotice } from '../services/attachments.js'
@@ -49,6 +50,8 @@ export const App = () => {
     state.activeId === null ? false : Object.hasOwn(state.streaming, state.activeId)
   )
   const activeId = useChatStore((state) => state.activeId)
+  // null 表示还没问过是否发送错误报告
+  const errorReporting = useSettings((state) => state.errorReporting)
 
   usePreventPageScroll(isMobile)
 
@@ -69,9 +72,13 @@ export const App = () => {
 
   useEffect(() => {
     void initChat()
-    // 首次打开先在设置里输入 API Key
-    ensureApiKey()
   }, [])
+
+  useEffect(() => {
+    if (errorReporting !== null) {
+      ensureApiKey()
+    }
+  }, [errorReporting])
 
   return (
     <>
@@ -132,6 +139,7 @@ export const App = () => {
         </main>
         <SearchPanel />
       </div>
+      <ErrorReportPrompt />
       <SettingsDialog />
       <Toast />
     </>

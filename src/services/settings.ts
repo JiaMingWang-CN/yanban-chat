@@ -7,7 +7,7 @@ export type Locale = 'zh-CN' | 'en-US'
 /** 主题偏好；默认跟随系统 */
 export type ThemePreference = 'light' | 'dark' | 'system'
 
-/** 本机设置，存 localStorage：API Key、语言、主题、位置、朗读音色、深度思考与智能搜索开关、侧边栏收起状态 */
+/** 本机设置，存 localStorage：API Key、语言、主题、位置、朗读音色、深度思考与智能搜索开关、错误报告开关、侧边栏收起状态 */
 type Settings = {
   apiKey: string | null
   chatApiKey: string | null
@@ -17,6 +17,8 @@ type Settings = {
   ttsVoice: TtsVoice
   thinking: boolean
   search: boolean
+  /** 是否发送错误报告；null 表示用户尚未选择 */
+  errorReporting: boolean | null
   siderCollapsed: boolean
 }
 
@@ -29,6 +31,7 @@ const KEYS = {
   ttsVoice: 'chat-demo:tts-voice',
   thinking: 'chat-demo:thinking',
   search: 'chat-demo:search',
+  errorReporting: 'chat-demo:error-reporting',
   siderCollapsed: 'chat-demo:sider-collapsed',
 } as const
 
@@ -89,6 +92,12 @@ const initialThemePreference = (): ThemePreference => {
 /** 未保存过时使用服务端默认音色 stella（海星） */
 const initialTtsVoice = (): TtsVoice => (read(KEYS.ttsVoice) === 'tide' ? 'tide' : 'stella')
 
+/** 未选择过时返回 null，由首次使用的弹窗询问 */
+const initialErrorReporting = (): boolean | null => {
+  const saved = read(KEYS.errorReporting)
+  return saved === 'true' ? true : saved === 'false' ? false : null
+}
+
 export const useSettings = create<Settings>(() => ({
   apiKey: read(KEYS.apiKey),
   chatApiKey: read(KEYS.chatApiKey),
@@ -98,6 +107,7 @@ export const useSettings = create<Settings>(() => ({
   ttsVoice: initialTtsVoice(),
   thinking: read(KEYS.thinking) === 'true',
   search: read(KEYS.search) === 'true',
+  errorReporting: initialErrorReporting(),
   siderCollapsed: read(KEYS.siderCollapsed) === 'true',
 }))
 
@@ -140,6 +150,11 @@ export const setThinking = (thinking: boolean) => {
 export const setSearch = (search: boolean) => {
   write(KEYS.search, String(search))
   useSettings.setState({ search })
+}
+
+export const setErrorReporting = (errorReporting: boolean) => {
+  write(KEYS.errorReporting, String(errorReporting))
+  useSettings.setState({ errorReporting })
 }
 
 export const setSiderCollapsed = (siderCollapsed: boolean) => {

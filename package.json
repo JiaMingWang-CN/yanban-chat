@@ -1,6 +1,6 @@
 {
   "name": "yanban",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "言伴：基于 DeepSeek API 的移动端聊天应用，对话模型可切换至任意 Anthropic 兼容端点。",
   "license": "MIT",
   "private": true,
