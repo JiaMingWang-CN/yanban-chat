@@ -39,6 +39,9 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <!-- 应用内更新：下载新版本安装包后交给系统安装器 -->
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+
     <!-- 语音输入：网页调用 getUserMedia 时，Capacitor 会申请这两个权限；
          未声明会导致系统直接拒绝，连授权框都不会弹出。 -->
     <uses-permission android:name="android.permission.RECORD_AUDIO" />

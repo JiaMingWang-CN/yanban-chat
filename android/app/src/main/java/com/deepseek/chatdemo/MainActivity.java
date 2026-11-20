@@ -34,6 +34,7 @@ public class MainActivity extends BridgeActivity {
         AppCompatDelegate.setDefaultNightMode(nightModeOf(prefs.getString(NIGHT_MODE_KEY, "system")));
 
         registerPlugin(AppAppearancePlugin.class);
+        registerPlugin(AppUpdaterPlugin.class);
         registerPlugin(StreamHttpPlugin.class);
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);

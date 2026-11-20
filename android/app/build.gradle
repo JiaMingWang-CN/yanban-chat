@@ -14,14 +14,17 @@ if (releasePropertiesFile.exists()) {
     releasePropertiesFile.withInputStream { releaseProperties.load(it) }
 }
 
+// 版本号以 package.json 为唯一来源，避免应用内更新与实际版本不一致
+def appVersion = new groovy.json.JsonSlurper().parseText(file('../../package.json').text).version
+
 android {
     namespace = "com.deepseek.chatdemo"
     compileSdk = rootProject.ext.compileSdkVersion
     defaultConfig {
         applicationId "com.deepseek.chatdemo"
         minSdkVersion rootProject.ext.minSdkVersion
-        versionCode 3
-        versionName "1.0.1"
+        versionCode 4
+        versionName appVersion
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         aaptOptions {
              // Files and dirs to omit from the packaged assets dir, modified to accommodate modern web apps.

@@ -15,6 +15,7 @@ The chat model can run against either the official DeepSeek API or any Anthropic
 - Voice input and read-aloud (ASR / TTS).
 - Markdown, syntax highlighting, KaTeX math and Mermaid diagrams.
 - Simplified Chinese and English, light and dark themes, mobile layouts, history import and export.
+- In-app update check: compares the GitHub Releases version and hands the download plus system installer to native code.
 
 ## Getting started
 
