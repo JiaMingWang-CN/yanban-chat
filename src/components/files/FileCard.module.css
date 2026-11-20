@@ -121,3 +121,10 @@
   color: var(--dsw-alias-label-primary-foreground);
   background-color: var(--dsw-alias-state-error-primary);
 }
+
+/* 触屏设备没有悬停：移除按钮常显，否则无法删除附件 */
+@media (hover: none) {
+  .remove {
+    opacity: 1;
+  }
+}

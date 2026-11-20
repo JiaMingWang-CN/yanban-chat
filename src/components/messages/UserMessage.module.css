@@ -102,3 +102,10 @@
   gap: 8px;
   margin: 6px 10px 10px;
 }
+
+/* 触屏设备没有悬停：操作栏常显 */
+@media (hover: none) {
+  .actions {
+    opacity: 1;
+  }
+}

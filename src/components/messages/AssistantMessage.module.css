@@ -137,3 +137,10 @@
     --search-row-site-logo-color: var(--dsw-alias-interactive-bg-hover);
   }
 }
+
+/* 触屏设备没有悬停：操作栏常显，否则朗读、复制、重新生成永远看不见 */
+@media (hover: none) {
+  .actions {
+    opacity: 1;
+  }
+}
