@@ -6,6 +6,17 @@ An Android chat app built on the DeepSeek API. The web layer is React + rspack; 
 
 The chat model can run against either the official DeepSeek API or any Anthropic-compatible endpoint. Speech, document parsing and web search always use the official DeepSeek APIs.
 
+## Community and help
+
+**Developers from anywhere are welcome to join the developer group**: talk about model access, endpoint and parameter setup, prompt craft, or bring bugs and feature requests so the app keeps getting better. If you just want to chat quietly and follow releases, the Yanban group is the place.
+
+| Yanban group | Developer group | Add me |
+| --- | --- | --- |
+| ![Yanban group 703034136](docs/qq-yanban-group.png) | ![Developer group 1136938723](docs/qq-dev-group.jpg) | ![QQ 2080676062](docs/qq-contact.png) |
+| QQ group: 703034136 | QQ group: 1136938723 | QQ: 2080676062 |
+
+Questions, feature requests or just wanting a different model — reach out. If you would rather not deal with API keys, endpoints and model configuration at all, ask me directly: I offer a model access service with the key and endpoint set up, so you just install and use it. Billed either per token or by monthly subscription — talk to me for pricing.
+
 ## Why this exists
 
 The official DeepSeek app has usage quotas, so at busy times it queues, answers slowly, or refuses to send at all.
@@ -47,6 +58,20 @@ export const CHAT_PROVIDER = {
 - `kind: 'deepseek'`: chat goes through the DeepSeek compatibility layer; Settings shows a single DeepSeek API key field.
 - `kind: 'anthropic-compatible'`: chat goes to the third-party endpoint; Settings then shows two fields, one for the chat provider key and one for the DeepSeek key.
 
+**With a third-party endpoint, your DeepSeek key pays only for tool calls, not for the chat itself.** Tokens are billed by the third-party provider (many of them have free tiers); the official account is charged only for speech, web search, page reading and document parsing, no matter how long the conversation is.
+
+Current official prices (see the [pricing page](https://api-docs.deepseek.com/quick_start/pricing)):
+
+| Capability | Billed per | Price |
+| --- | --- | --- |
+| Web search (Search) | 1,000 successful requests | ¥5 |
+| Page reading (Fetch) | 1,000 successful requests | ¥5 |
+| OCR / file parsing | 1,000 pages | ¥1.5 |
+| Speech to text (ASR) | hour of audio | ¥0.39 (launch 50% off) |
+| Text to speech (TTS) | 10,000 characters | ¥1.5 (launch 50% off) |
+
+In practice, if you mostly chat and search once in a while, the helper APIs cost a few jiao to a few yuan a month.
+
 API keys are entered in Settings and kept in browser localStorage; none are committed to this repository.
 
 > If a third-party endpoint does not allow its auth headers in cross-origin requests, the browser preflight rejects the call. On Android the app issues the request natively (`StreamHttpPlugin`) to sidestep that; a plain web deployment needs its own proxy.
@@ -84,19 +109,6 @@ Signing material is read from outside the repository: `~/.android/yanban-release
 ## Updates
 
 Settings → General → Check for updates compares against the latest GitHub Release and installs a new version in place. Versions 1.0.1 and earlier lack this, so they need one manual install.
-
-## Community and help
-
-Questions, feature requests or just wanting a different model — reach out.
-
-**Developers from anywhere are welcome to join the developer group**: talk about model access, endpoint and parameter setup, prompt craft, or bring bugs and feature requests so the app keeps getting better.
-
-| Developer group | Add me |
-| --- | --- |
-| ![Developer group 1136938723](docs/qq-group.jpg) | ![QQ 2080676062](docs/qq-contact.png) |
-| QQ group: 1136938723 | QQ: 2080676062 |
-
-If you would rather not deal with API keys, endpoints and model configuration at all, ask me directly: I offer a model access service with the key and endpoint set up, so you just install and use it. Billed either per token or by monthly subscription — talk to me for pricing.
 
 ## Layout
 
