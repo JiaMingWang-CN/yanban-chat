@@ -10,14 +10,22 @@ The chat model can run against either the official DeepSeek API or any Anthropic
 
 **Developers from anywhere are welcome to join the developer group**: talk about model access, endpoint and parameter setup, prompt craft, or bring bugs and feature requests so the app keeps getting better. If you just want to chat quietly and follow releases, the Yanban group is the place.
 
-**Relay services and model providers are welcome as well**: whether you want your Anthropic-compatible endpoint wired into Yanban, want to offer users a base URL they can paste into Settings, or just want to hear which models people are after — come and talk.
-
 | Yanban group | Developer group | Add me |
 | --- | --- | --- |
 | ![Yanban group 703034136](docs/qq-yanban-group.png) | ![Developer group 1136938723](docs/qq-dev-group.jpg) | ![QQ 2080676062](docs/qq-contact.png) |
 | QQ group: 703034136 | QQ group: 1136938723 | QQ: 2080676062 |
 
 Questions, feature requests or just wanting a different model — reach out. If you would rather not deal with API keys, endpoints and model configuration at all, ask me directly: I offer a model access service with the key and endpoint set up, so you just install and use it. Billed either per token or by monthly subscription — talk to me for pricing.
+
+## Partnerships
+
+Relay services and model providers are welcome to talk:
+
+- **Get into Yanban**: if you run an Anthropic-compatible endpoint and want it offered as a chat option, we wire up the configuration and check streaming, thinking mode and attachments end to end.
+- **Serve users**: if you want Yanban users to simply paste your base URL and go, we can point to it in the docs and the group.
+- **Tell us what is missing**: come and see which models people actually use and what capabilities they still want.
+
+Join the developer group, or add me on QQ (2080676062); terms and pricing on request.
 
 ## Why this exists
 
